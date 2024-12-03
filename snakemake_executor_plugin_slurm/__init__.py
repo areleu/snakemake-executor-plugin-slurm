@@ -563,8 +563,8 @@ We leave it to SLURM to resume your job(s)"""
         # The set() has been introduced during review to eliminate
         # duplicates. They are not harmful, but disturbing to read.
         accounts = set(_.strip() for _ in accounts.split("\n") if _)
-
-        if account not in accounts:
+        # Monkey patched to allow submissions with numeric accounts
+        if str(account) not in accounts:
             raise WorkflowError(
                 f"The given account {account} appears to be invalid. Available "
                 f"accounts:\n{', '.join(accounts)}"
